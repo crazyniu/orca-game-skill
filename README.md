@@ -1,41 +1,36 @@
 # Orca game skills
 
-Agent skills for Unity game development with Orca. Each folder with a `SKILL.md` is one skill, usable by Claude Code, Codex, omp and pi.
+Agent skills for making Unity games with AI agents coordinated by Orca. They work with Claude Code, Codex, Pi and other agents that read the standard `SKILL.md` format.
+
+## Why
+
+Generated mockups look good, but the game built from them rarely matches. A flat image is not a specification, and agents guess sizes, states and motion. These skills replace the guessing with a fixed order: agree on the look in writing, build a clickable UI the user can try in the Unity Editor, and connect game logic only after the user approves that UI.
 
 ## Skills
 
-| Skill | Use |
-| --- | --- |
-| [ui-first-development](ui-first-development/SKILL.md) | Unity game development flow: art direction, screen specs and assets first; a clickable, animated UI shell with fake data approved by the user in the Unity Editor; game logic connected last. |
-
 ### ui-first-development
 
-Stages, each with a gate before the next:
+Unity game development flow: design first, UI second, logic last.
 
-0. Core loop prototype (optional, throwaway): is the mechanic fun?
-1. Art direction document and mockups as style direction ([template](ui-first-development/references/art-direction.md)).
-2. Screen spec per screen with an independent review ([template](ui-first-development/references/screen-spec.md), [pattern library](ui-first-development/references/pattern-library.md), [review checklist](ui-first-development/references/review-checklist.md)).
-3. Asset inventory, per-asset specs and manifest ([template](ui-first-development/references/asset-spec.md)).
-4. UI shell in the real Unity scene with fake data, motion, sound and a development state switcher ([Unity standards](ui-first-development/references/unity.md)).
-5. User approval in the Unity Editor; approved captures become the visual baseline.
-6. Logic wiring through the same view contract, without visual changes.
-7. Device check and polish.
+| Stage | Result | Gate |
+| --- | --- | --- |
+| 0. Core loop prototype (optional) | Throwaway build answering "is it fun?" | Proceed, pivot or kill |
+| 1. Art direction | Visual identity, mood, shapes, colors, UI, motion and sound direction, asset standards; mockups as direction only | User approves the direction |
+| 2. Screen spec | Per screen: player need, layout and sizes, every state, interactions, view contract, motion and sound, acceptance criteria; shared pattern library | Independent review and user approval |
+| 3. Assets | Asset inventory, per-asset specs with generation prompts, manifest | User confirms the list |
+| 4. UI shell | Real Unity scene and views with fake data, motion, sound and a development state switcher | Tests, screenshots of every state, timed animation evidence |
+| 5. User approval | User tries every state in the Unity Editor | Approved captures become the visual baseline |
+| 6. Logic wiring | Real logic through the same view contract, no visual changes | Tests pass, baseline still matches |
+| 7. Device check | Touch feel, frame rate, memory, safe area, audio on real phones | Issues return to their stage |
 
-Mockups are style direction only; the acceptance target is what the user approved in Unity.
+It also covers how existing projects join the flow, which stages a small change needs, Unity implementation standards (scenes and prefabs, UGUI, screen stack, audio mixer, timed frame capture) and a review checklist.
 
 ## Install
 
-```bash
-git clone https://github.com/crazyniu/orca-game-skill.git ~/.agents/orca-game-skill
-bash ~/.agents/orca-game-skill/install.sh
+Send this to your agent:
+
+```text
+Install the Unity game development skills from https://github.com/crazyniu/orca-game-skill for all my coding agents by running `npx -y skills add crazyniu/orca-game-skill -g -a claude-code -a codex -a pi -y`, then run `npx -y skills list -g` and confirm that ui-first-development is installed.
 ```
 
-The script links each skill into `~/.agents/skills` and, when Claude Code is installed, `~/.claude/skills`. An existing non-link folder of the same name is first moved to `~/.agents/skill-backups/`.
-
-## Update
-
-```bash
-git -C ~/.agents/orca-game-skill pull
-```
-
-Links pick up the change immediately. Run `install.sh` again only when a new skill folder is added.
+Update later with `npx -y skills update -g`.
