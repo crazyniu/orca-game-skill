@@ -23,7 +23,17 @@ Unity game development flow: design first, UI second, logic last.
 | 6. Logic wiring | Real logic through the same view contract, no visual changes | Tests pass, baseline still matches |
 | 7. Device check | Touch feel, frame rate, memory, safe area, audio on real phones | Issues return to their stage |
 
-It also covers how existing projects join the flow, which stages a small change needs, Unity implementation standards (scenes and prefabs, UGUI, screen stack, audio mixer, timed frame capture) and a review checklist.
+It also includes:
+
+- How existing projects join the flow and which stages a small change needs.
+- A question-by-question script for running each stage with the user.
+- Templates and filled examples: art direction, screen spec, pattern library, asset specs.
+- Unity implementation standards and starting code compiled against Unity 6000.6: screen stack, view contract with a fake data source, development state switcher, motion switch, timed frame capture with a timing log, and Play Mode tests for state reachability and same-role control sizes.
+- Evidence format and a timing checker that compares logs with the spec's durations.
+- Worker brief and report templates for Orca dispatch.
+- A list of common failures with the rule that prevents each.
+
+Maintainers: `tools/compile_unity_templates.sh <unity-project>` compiles the C# templates with the Roslyn compiler bundled in Unity, without starting the Editor.
 
 ## Install
 

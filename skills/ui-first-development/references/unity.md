@@ -1,6 +1,6 @@
 # Unity implementation standards
 
-Applies in stages 4 to 7. The project's existing choices win: do not switch a running project between UGUI and UI Toolkit, Resources and Addressables, or input systems as a side effect of UI work. Propose such a change to the user separately.
+Applies in stages 4 to 7. Starting code for the patterns below is in [../assets/unity/](../assets/unity/README.md); evidence layout in [evidence.md](evidence.md). The project's existing choices win: do not switch a running project between UGUI and UI Toolkit, Resources and Addressables, or input systems as a side effect of UI work. Propose such a change to the user separately.
 
 ## Version awareness
 

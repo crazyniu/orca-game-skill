@@ -18,6 +18,23 @@ The project's own rules (agent instructions, conventions, naming, test and build
 
 "Logic last" means connecting logic to views waits for UI approval. Pure game logic (rules, economy, saves) and its tests may be developed at any time, kept independent of views.
 
+## Files in this skill
+
+Read a file when its stage starts; do not load everything up front.
+
+| File | Read when |
+| --- | --- |
+| [references/collaboration.md](references/collaboration.md) | Running any stage with the user: which questions, in which order |
+| [references/art-direction.md](references/art-direction.md) | Stage 1 |
+| [references/screen-spec.md](references/screen-spec.md), [references/pattern-library.md](references/pattern-library.md) | Stage 2 |
+| [references/examples.md](references/examples.md) | Writing any spec: filled screen spec, asset specs and pattern entry showing the expected depth |
+| [references/asset-spec.md](references/asset-spec.md) | Stage 3 |
+| [references/unity.md](references/unity.md), [assets/unity/](assets/unity/README.md) | Stages 4 to 7: standards and starting code (screen stack, view contract, fake data, state switcher, timed capture, consistency tests) |
+| [references/evidence.md](references/evidence.md), [scripts/check_timing.py](scripts/check_timing.py) | Producing or checking screenshots, frame sequences and timing logs |
+| [references/review-checklist.md](references/review-checklist.md) | Any review |
+| [references/pitfalls.md](references/pitfalls.md) | Before every hand-over to the user, and when writing a brief |
+| [references/dispatch.md](references/dispatch.md) | Writing a worker brief, reading a worker report |
+
 ## Documents and default locations
 
 Use the project's locations when it has them; otherwise:
@@ -88,6 +105,7 @@ Follow [references/asset-spec.md](references/asset-spec.md).
 ### 4. UI shell
 
 - Build in the real scene, views and prefabs the shipped game will use, following [references/unity.md](references/unity.md). Never a separate demo scene, sandbox copy or prototype in another technology, because it would need rewriting and would drift from the game.
+- Start from the templates in [assets/unity/](assets/unity/README.md), or adapt the project's existing equivalents to the same contract.
 - Feed the views from a fake data source that implements the view contract. No game rules in this stage; the UI never owns or decides game state, it shows data and raises events.
 - Include real input feedback, transitions, idle motion, music and sound, following the pattern library's animation and sound tables.
 - Add a development-only state switcher (editor window or `UNITY_EDITOR` / `DEVELOPMENT_BUILD` overlay) so the user can step through every state in Play mode. It is excluded from release builds.
@@ -96,6 +114,7 @@ Follow [references/asset-spec.md](references/asset-spec.md).
 ### 5. User approval
 
 - Tell the user which branch or build to open and which states to check. The default is the Unity Editor in Play mode, with the Game view at the target device resolution or the Device Simulator. A WebGL or device build is only for reviewing away from the Editor or for sharing.
+- Before handing over, check the delivery against [references/pitfalls.md](references/pitfalls.md) and look at every piece of evidence yourself.
 - Never declare a UI done yourself. Track every defect the user reports and fix it in the shell.
 - Gate: the user explicitly approves the screen. Then commit runtime captures of every state as the visual baseline in the project's baseline location.
 
@@ -113,7 +132,7 @@ Follow [references/asset-spec.md](references/asset-spec.md).
 
 ## Dispatch checklist
 
-Dispatch through the Orca orchestration skill. Unity work runs on a machine with the project's Unity version, one Unity process at a time. When handing any stage to a worker, the task spec states:
+Dispatch through the Orca orchestration skill. Unity work runs on a machine with the project's Unity version, one Unity process at a time. Use the brief and report templates in [references/dispatch.md](references/dispatch.md). When handing any stage to a worker, the task spec states:
 
 - The stage, the screen, and the gate it must reach.
 - The owned files and the documents it must follow (art direction, screen spec, asset specs, pattern library).
